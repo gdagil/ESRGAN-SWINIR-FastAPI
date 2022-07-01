@@ -1,12 +1,11 @@
 version: "3.9"
 
 services:
-  jupyterlab:
+  API:
     build: 
       context: .
-    container_name: jupyterlab
+    container_name: fast-api-ESRGAN-SWINIR
     ports:
-      - 8888:8888
       - 80:80
     environment:
       ESRGAN_MODEL_NAME: RealESRGAN_x4plus
@@ -19,12 +18,19 @@ services:
       ESRGAN_ALPHA_UPSAMPLER: realesrgan
       ESRGAN_GPU_ID: 0
 
-
+      SWINIR_TASK: real_sr
+      SWINIR_SCALE: 4
+      SWINIR_NOISE: 15
+      SWINIR_JPEG: 40
+      SWINIR_TRAIN_PATCH_SIZE: 128
+      SWINIR_LARGE_MODEL: True
+      SWINIR_MODEL: 003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN
+      SWINIR_TILE: 0
+      SWINIR_TILE_OVERLAP: 32
 
     volumes:
       - ./data:/api/data:rw
 
-    
     deploy:
       resources:
         reservations:

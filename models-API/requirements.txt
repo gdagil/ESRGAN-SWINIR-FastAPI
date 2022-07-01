@@ -11,3 +11,4 @@ uvicorn
 fastapi 
 pydantic 
 python-multipart
+timm

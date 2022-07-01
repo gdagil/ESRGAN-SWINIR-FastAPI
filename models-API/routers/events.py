@@ -1,14 +1,16 @@
 import os, pprint
+from this import s
 
 from fastapi import FastAPI
 
 from basicsr.archs.rrdbnet_arch import RRDBNet
 
 from models.esrgan import ESRGAN
+from models.swinir import SWINIR
 from utils.ESRGAN.realesrgan import RealESRGANer
 
 
-def startup(app:FastAPI) -> None:
+def startup_ESRGAN(app:FastAPI) -> None:
     app.state.ESRGAN_config = ESRGAN()
     pprint.pprint(f"ESRGAN:\n{app.state.ESRGAN_config.dict()}")
 
@@ -47,7 +49,21 @@ def startup(app:FastAPI) -> None:
     else:
         app.state.ESRGAN = upsampler
 
+
+def startup_SWINIR(app:FastAPI) -> None:
+    app.state.SWINIR_config = SWINIR()
+    pprint.pprint(f"SWINIR:\n{app.state.SWINIR_config.dict()}")
+    model = SWINIR.define_model(app.state.SWINIR_config)
+    model.eval()
+    model = model.to(SWINIR.define_device())
+    app.state.SWINIR = model
+
+
+def startup(app:FastAPI) -> None:
+    startup_ESRGAN(app)
+    startup_SWINIR(app)
+
+
 def shutdown(app:FastAPI) -> None:
     del app.state.ESRGAN
-
-
+    del app.state.ESRGAN_config

@@ -14,6 +14,7 @@ RUN chmod +x setup.sh
 RUN ./setup.sh
 
 COPY models-API .
+RUN pip install timm
 
 EXPOSE 80
 
