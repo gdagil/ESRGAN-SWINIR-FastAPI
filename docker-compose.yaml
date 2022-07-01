@@ -8,8 +8,23 @@ services:
     ports:
       - 8888:8888
       - 80:80
+    environment:
+      ESRGAN_MODEL_NAME: RealESRGAN_x4plus
+      ESRGAN_TILE: 0
+      ESRGAN_TILE_PAD: 10
+      ESRGAN_PRE_PAD: 0
+      ESRGAN_OUTPUT_SCALE: 2
+      ESRGAN_FP32: False
+      ESRGAN_FACE_ENCHANCE: False
+      ESRGAN_ALPHA_UPSAMPLER: realesrgan
+      ESRGAN_GPU_ID: 0
+
+
+
     volumes:
-      - ./models-API:/api:rw
+      - ./data:/api/data:rw
+
+    
     deploy:
       resources:
         reservations:
