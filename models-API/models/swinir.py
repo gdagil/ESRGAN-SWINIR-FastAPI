@@ -1,4 +1,4 @@
-import os
+import os, requests
 from pydantic import BaseModel
 from typing import Literal
 
@@ -53,6 +53,15 @@ class SWINIR(BaseModel):
     
     @staticmethod
     def define_model(args):
+        if os.path.exists(args.model_path):
+            print(f'loading model from {args.model_path}')
+        else:
+            os.makedirs(os.path.dirname(args.model_path), exist_ok=True)
+            url = 'https://github.com/JingyunLiang/SwinIR/releases/download/v0.0/{}'.format(os.path.basename(args.model_path))
+            r = requests.get(url, allow_redirects=True)
+            print(f'downloading model {args.model_path}')
+            open(args.model_path, 'wb').write(r.content)
+            
     # 001 classical image sr
         if args.task == 'classical_sr':
             model = SwinIR(upscale=args.scale, in_chans=3, img_size=args.training_patch_size, window_size=8,
