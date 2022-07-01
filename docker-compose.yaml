@@ -2,9 +2,7 @@ version: "3.7"
 
 services:
   api:
-    build: 
-      context: .
-    container_name: fast-api-ESRGAN-SWINIR
+    image: danil2286/esrgan-swinir-fastapi:latest
     ports:
       - 80:80
     environment:
@@ -31,10 +29,10 @@ services:
     volumes:
       - ./data:/api/data:rw
 
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - capabilities: [gpu]
-    #           driver: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+              driver: nvidia
 

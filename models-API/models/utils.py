@@ -17,7 +17,7 @@ def file_meta(image:UploadFile, configs):
 def ESRGAN_upscale(image:UploadFile, app:FastAPI) -> str:    
     save_path, ext = file_meta(image, app.state.ESRGAN_config)
 
-    if not os.path.exists(save_path):
+    if not os.path.exists(f"{save_path}.{ext}"):
         with open(f"data/raw/{image.filename}", "wb") as buffer:
             shutil.copyfileobj(image.file, buffer)  
         img = cv2.imread(f"data/raw/{image.filename}", cv2.IMREAD_UNCHANGED)
@@ -36,15 +36,16 @@ def ESRGAN_upscale(image:UploadFile, app:FastAPI) -> str:
             print('If you encounter CUDA out of memory, try to set --tile with a smaller number.')  
         if img_mode == 'RGBA':  # RGBA images should be saved in png format
             ext = 'png' 
+        print(f"{save_path}.{ext}")
         cv2.imwrite(f"{save_path}.{ext}", output)
     
-    return save_path
+    return f"{save_path}.{ext}"
 
 
 def SWINIR_upscale(image:UploadFile, app:FastAPI) -> str:  
     save_path, ext = file_meta(image, app.state.SWINIR_config)
 
-    if not os.path.exists(save_path):
+    if not os.path.exists(f"{save_path}.{ext}"):
         with open(f"data/raw/{image.filename}", "wb") as buffer:
             shutil.copyfileobj(image.file, buffer)
 
@@ -74,6 +75,6 @@ def SWINIR_upscale(image:UploadFile, app:FastAPI) -> str:
         if output.ndim == 3:
             output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))  # CHW-RGB to HCW-BGR
         output = (output * 255.0).round().astype(np.uint8)  # float32 to uint8
-        cv2.imwrite(save_path, output)
+        cv2.imwrite(f"{save_path}.{ext}", output)
 
-    return save_path
+    return f"{save_path}.{ext}"

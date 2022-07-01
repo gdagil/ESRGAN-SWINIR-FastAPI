@@ -15,12 +15,12 @@ app.add_event_handler("shutdown", func=partial(shutdown, app=app))
 
 
 @app.post("/esrgan", tags=["api_models"])
-async def ESRGAN_request(image:UploadFile = File(...)):
+def ESRGAN_request(image:UploadFile = File(...)):
     return ESRGAN_upscale(image, app)
 
 
 @app.post("/swinir", tags=["api_models"])
-async def SWINIR_request(image:UploadFile = File(...)):
+def SWINIR_request(image:UploadFile = File(...)):
     return SWINIR_upscale(image, app)
 
 
