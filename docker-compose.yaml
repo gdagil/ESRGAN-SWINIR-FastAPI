@@ -1,7 +1,7 @@
-version: "3.9"
+version: "3.7"
 
 services:
-  API:
+  api:
     build: 
       context: .
     container_name: fast-api-ESRGAN-SWINIR
@@ -13,8 +13,8 @@ services:
       ESRGAN_TILE_PAD: 10
       ESRGAN_PRE_PAD: 0
       ESRGAN_OUTPUT_SCALE: 2
-      ESRGAN_FP32: False
-      ESRGAN_FACE_ENCHANCE: False
+      ESRGAN_FP32: "False"
+      ESRGAN_FACE_ENCHANCE: "False"
       ESRGAN_ALPHA_UPSAMPLER: realesrgan
       ESRGAN_GPU_ID: 0
 
@@ -23,7 +23,7 @@ services:
       SWINIR_NOISE: 15
       SWINIR_JPEG: 40
       SWINIR_TRAIN_PATCH_SIZE: 128
-      SWINIR_LARGE_MODEL: True
+      SWINIR_LARGE_MODEL: "True"
       SWINIR_MODEL: 003_realSR_BSRGAN_DFO_s64w8_SwinIR-M_x4_GAN
       SWINIR_TILE: 0
       SWINIR_TILE_OVERLAP: 32
@@ -31,38 +31,10 @@ services:
     volumes:
       - ./data:/api/data:rw
 
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [gpu]
-              driver: nvidia
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - capabilities: [gpu]
+    #           driver: nvidia
 
-
-  # esrgan:
-  #   image: danil2286/real-esrgan:latest
-  #   container_name: esrgan
-  #   volumes:
-  #     - ./data/:/NN/data:rw
-  #   environment:
-  #     IS_VIDEOS: false
-      
-  #     INPUT_FORMAT: jpg
-  #     MODEL_NAME: RealESRGAN_x4plus
-  #     OUT_SCALE: 2
-  #     TILE: 0
-  #     TILE_PAD: 10
-  #     PRE_PAD: 0
-  #     SUFFIX: "upped"
-  #     # STORE_TRUE_ARGS: "--face_enhance --fp32 --extract_frame_first"
-  #     ALPHA_UPSAMPLER: realesrgan
-
-  #     # Only for video
-  #     FPS: 30
-  #     NUM_PROCESS_PER_GPU: 2
-
-  #     # Only for images
-  #     GPU_ID: 0
-
-    # runtime: nvidia
-    # OR
