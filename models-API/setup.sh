@@ -1,7 +1,7 @@
 pip install -r requirements.txt
 
 
-git clone https://github.com/xinntao/Real-ESRGAN ./utils/ESRGAN
+git clone https://github.com/xinntao/Real-ESRGAN.git ./utils/ESRGAN
 git clone https://github.com/JingyunLiang/SwinIR.git ./utils/SWINIR
 
 
