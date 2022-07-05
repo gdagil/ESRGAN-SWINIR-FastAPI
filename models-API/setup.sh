@@ -5,7 +5,6 @@ git clone https://github.com/xinntao/Real-ESRGAN.git ./utils/ESRGAN
 git clone https://github.com/JingyunLiang/SwinIR.git ./utils/SWINIR
 
 
-utils/SWINIR/model_zoo/
 # Download weights for ESRGAN
 wget https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.2.4/RealESRGAN_x4plus_anime_6B.pth -P utils/ESRGAN/experiments/pretrained_models
 wget https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.2.4/RealESRGAN_x4plus_anime_6B_netD.pth -P utils/ESRGAN/experiments/pretrained_models
